@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package api.coupon.v1;
+
+option go_package = "github.com/ZQCard/kratos-service-base/coupon/api/coupon/v1;v1";
+
+import "google/api/annotations.proto";
+
+service Coupon {
+    // 优惠券列表
+    rpc ListCoupon (ListCouponRequest) returns (ListCouponReply) {
+        option (google.api.http)  = {
+            get: "/v1/coupon"
+        };
+    };
+
+    // 抢券
+    rpc RushCollectCoupon (RushCollectCouponRequest) returns (RushCollectCouponReply){
+        option (google.api.http) = {
+            post: "/v1/coupon",
+            body: "*"
+        };
+    };
+
+    // 用户拥有的优惠券列表
+    rpc ListUserCoupon (ListUserCouponRequest)returns(ListUserCouponReply){
+        option (google.api.http) = {
+            get: "v1/coupon/user"
+        };
+    }
+}
+
+message CouponInfo {
+    int64 id = 1;
+    string name = 2;
+    int64 type = 3;
+    float money = 4;
+    float lower_money = 5;
+    int64 status = 6;
+    int64 total_count = 7;
+    int64 collect_count = 8;
+    string start_time = 9;
+    string end_time = 10;
+    int64 limit = 11;
+}
+
+message RushCollectCouponRequest {
+    int64 coupon_id = 1;
+}
+
+message RushCollectCouponReply {
+    string message = 1;
+}
+
+message ListCouponRequest {
+}
+message ListCouponReply {
+    repeated CouponInfo results = 1;
+}
+
+message ListUserCouponRequest {
+    int64 page = 1;
+    int64 pageSize = 2;
+    int64 status = 3;
+    int64 type = 4;
+}
+
+message ListUserCouponReply {
+    message ListUserInfo {
+        int64 id = 1;
+        string name = 2;
+        int64 type = 3;
+        float money = 4;
+        float lower_money = 5;
+        int64 status = 6;
+        int64 coupon_id = 7;
+        int64 coupon_status = 8;
+        int64 order_id = 9;
+        string use_time = 10;
+        string start_time = 11;
+        string end_time = 12;
+        string created_at = 13;
+    }
+    repeated ListUserInfo results = 1;
+    int64 count = 2;
+}

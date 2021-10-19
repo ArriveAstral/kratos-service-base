@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package api.sms.v1;
+
+option go_package = "github.com/ZQCard/kratos-service-base/api/sms/v1;v1";
+
+import "google/api/annotations.proto";
+
+
+service Sms {
+    rpc SendSmsCode (SendSmsCodeRequest) returns (SendSmsCodeReply){
+        option (google.api.http) = {
+            post: "/v1/sms/sendCode",
+            body: "*"
+        };
+    };
+
+    rpc VerifySmsCode (VerifySmsCodeRequest) returns (VerifySmsCodeReply){
+        option (google.api.http) = {
+            post: "/v1/sms/verifyCode",
+            body: "*"
+        };
+    };
+}
+
+message SendSmsCodeRequest {
+    string mobile = 1;
+    string scene = 2;
+}
+
+message SendSmsCodeReply {
+    bool is_success = 1;
+}
+
+message VerifySmsCodeRequest {
+    string mobile = 1;
+    string scene = 2;
+    string code = 3;
+}
+
+message VerifySmsCodeReply {
+    bool is_success = 1;
+}

@@ -1,0 +1,11 @@
+nacos:
+  host: "127.0.0.1"
+  port: 8848
+  namespace: "2da871ea-f117-4694-a434-3d6056849874"
+  user: "nacos"
+  password: "zhouqi445864742."
+  data_id: "kratos-sms-service"
+  group: "DEV"
+  log_dir: "tmp/nacos/log"
+  log_cache: "tmp/nacos/cache"
+  log_level: "debug"

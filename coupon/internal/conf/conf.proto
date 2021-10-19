@@ -1,0 +1,79 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "server-service/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Service service = 1;
+  Trace trace = 2;
+  Server server = 3;
+  Data data = 4;
+  Nacos nacos = 5;
+  Registry registry = 6;
+}
+
+message Service {
+  string name = 1;
+  string version = 2;
+}
+
+message Nacos {
+  string host = 1;
+  int64  port = 2;
+  string namespace = 3;
+  string user = 4;
+  string password = 6;
+  string data_id = 7;
+  string group = 8;
+  string log_dir = 9;
+  string log_cache = 10;
+  string log_level = 11;
+}
+
+
+message Trace {
+  string endpoint = 1;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration read_timeout = 3;
+    google.protobuf.Duration write_timeout = 4;
+  }
+  message Kafka {
+    repeated string addrs = 1;
+  }
+  Database database = 1;
+  Kafka kafka = 2;
+}
+
+message Registry {
+  message Consul {
+    string address = 1;
+    string scheme = 2;
+  }
+  Consul consul = 1;
+}
